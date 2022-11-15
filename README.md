@@ -12,7 +12,7 @@ use the command `roslaunch grab_target moveit_example.launch`
 
   (note that `example` is a ExampleMoveItTrajectories object )
 
-  To open the gripper: `example.reach_gripper_position(0)`
+  To open the gripper: `example.reach_gripper_position(1)`
   To close the gripper 50%: `example.reach_gripper_position(0.5)`
 
   To reach a given pose: `example.reach_cartesian_pose(pose=pose_goal, tolerance=0.01, constraints=None)`
