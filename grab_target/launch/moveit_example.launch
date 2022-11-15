@@ -1,10 +1,14 @@
 <launch>
 
     <!-- Robot namespace -->
-    <arg name="robot_name" default="my_gen3"/>
-    <arg name="start_delay_seconds" default="0"/>
+    <!-- <arg name="robot_name" default="my_gen3_lite"/> -->
+    <!-- <arg name="start_delay_seconds" default="0"/> -->
 
     <!-- Launch the example in that namespace -->
-    <node name="moveit_example" pkg="grab_target" type="plan_and_move.py" ns="$(arg robot_name)" output="screen" launch-prefix="bash -c 'sleep $(arg start_delay_seconds); $0 $@' "/>
+    <!-- <node name="moveit_example" pkg="grab_target" type="plan_and_move.py" ns="$(arg robot_name)" output="screen" launch-prefix="bash -c 'sleep $(arg start_delay_seconds); $0 $@' "/>  -->
 
+    <include file="$(find kortex_driver)/launch/kortex_driver.launch">
+        <arg name="arm" value="gen3_lite"/>
+    </include>
+    <node pkg="grab_target" type="plan_and_move.py" name="move_arm" args="__ns:=my_gen3_lite"/>
 </launch>
