@@ -8,6 +8,8 @@ This project uses Kinova Gen3 Lite robot arm, to implement robot manipulation an
 use the command `roslaunch grab_target moveit_example.launch`
 
 ### Moving/Manipulating the arm
+The Kinova arm web app is available at: `192.168.1.10/monitoring` 
+
 `grab_target/scripts/plan_and_move`:
 
   (note that `example` is a ExampleMoveItTrajectories object )
@@ -19,3 +21,9 @@ use the command `roslaunch grab_target moveit_example.launch`
   (where pose_goal is a PoseStamped())
 
   To get the current pose: `example.get_cartesian_pose`
+  
+ ### Camera
+ Requires the realsense2_camera [package](https://github.com/IntelRealSense/realsense-ros#installation-instructions). For debugging, see the [documentation](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages).
+ To view the color image from the camera, use the topic `/camera/color/image_raw`
+ To view the depth image from the camera, use the topic `/camera/depth/image_rect_raw`
+
