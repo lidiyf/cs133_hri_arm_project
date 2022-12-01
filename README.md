@@ -22,6 +22,9 @@ The Kinova arm web app is available at: `192.168.1.10/monitoring`
 
   To get the current pose: `example.get_cartesian_pose`
   
+### Detecting Arm Position
+`get_xyz.py` prints the current position of the arm.
+  
  ### Camera
  Requires the realsense2_camera [package](https://github.com/IntelRealSense/realsense-ros#installation-instructions). For debugging, see the [documentation](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md#installing-the-packages).
  To view the color image from the camera, use the topic `/camera/color/image_raw`
