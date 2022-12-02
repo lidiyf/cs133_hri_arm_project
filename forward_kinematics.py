@@ -22,3 +22,4 @@ ret = chain.forward_kinematics(th)
 
 # To load the Gen3 lite description, you would put in your launch file : 
 # <param name="robot_description" command="$(find xacro)/xacro --inorder $(find kortex_description)/robots/gen3_lite_gen3_lite_2f.xacro sim:=false"/>
+# https://github.com/Kinovarobotics/ros_kortex/blob/noetic-devel/kortex_description/readme.md
