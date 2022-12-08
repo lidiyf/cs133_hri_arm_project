@@ -1,1 +1,69 @@
+cup1pos = [0, 0, 0];
+cup2pos = [0, 0, 0];
+cup3pos = [0, 0, 0];
+cup4pos = [0, 0, 0];
+cup1Prob = 0;
+cup2Prob = 0;
+cup3Prob = 0;
+cup4Prob = 0;
+gripperPos = [0, 0, 0];
+userInput = [0, 0, 0];
+endTask = False;
+gripperDistanceThreshold = 100;
+gripperDestination = [0, 0, 0];
+meetGripperThreshold = False;
+
+
+# cup configeration
+# 1 2 #
+# 3 4 #
+def main():
+	while not endTask:
+		if not meetGripperThreshold: # haven't reach threshold position:
+			# update probability
+			xInput = userInput[0] - gripperPos[0];
+			yInput = userInput[1] - gripperPos[1];
+			zInput = userInput[2] - gripperPos[2];
+			if not xInput == 0:
+				if xInput > 0:
+					update_probability(cup2Prob, xInput)
+					update_probability(cup4Prob, xInput)
+				else:
+					update_probability(cup1Prob, xInput)
+					update_probability(cup3Prob, xInput)
+			if not yInput == 0:
+				if yInput > 0:
+					update_probability(cup1Prob, yInput)
+					update_probability(cup2Prob, yInput)
+				else:
+					update_probability(cup3Prob, yInput)
+					update_probability(cup4Prob, yInput)
+			if not zInput == 0:
+				update_probability(max(cup1Prob, cup2Prob, cup3Prob, cup4Prob), zInput)
+
+
+
+			# Move the arm
+			cupWithMaxProb = max(cup1Prob, cup2Prob, cup3Prob, cup4Prob);
+			if cupWithMaxProb == cup1Prob:
+				gripperDestination = cup1pos;
+			elif cupWithMaxProb == cup2Prob:
+				gripperDestination = cup2pos;
+			elif cupWithMaxProb == cup3Prob:
+				gripperDestination = cup3pos;
+			else cupWithMaxProb == cup4Prob:
+				gripperDestination = cup4pos;
+
+			#### Call ros script to run the arm to gripperDestination
+
+
+			# TBA: determine if threshold is meet
+			if (...):
+				meetGripperThreshold = True;
+
+		else:
+			# TBA: go and pick up the item
+
+def update_probability(cubProb, displacement): # update mechanism
+	cubProb += displacement * 5;
 
