@@ -1,14 +1,14 @@
 import math
 
-cupsInfo = [{'idx': 1, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}, \
+cupsInfo = [{'idx': 0, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}, \
+			{'idx': 1, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}, \
 			{'idx': 2, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}, \
-			{'idx': 3, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}, \
-			{'idx': 4, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}]
-displacement = [0, 0, 0] # equals to home at the begining
+			{'idx': 3, 'position':[0, 0, 0], 'angleToEE': 0, 'probability': 0, 'disToEE': -1}]
 userInputAngle = 0;
 mapInputConstant = 0.5
 currGripperPos = [0, 0, 0]
 disToEEthreshold = 0.1
+finalGoalCupIdx = -1
 
 def map_input_to_displacement(input):
 	global mapInputConstant
@@ -30,7 +30,7 @@ def update_probability(cupsInfo): # TBA: finish this
 		cup['angleToEE'] = cupsInfo[cup['cupIdx']]['angleToEE']
 	cup_order.sort(key=get_cup_angle)
 	for i in range(4):
-		cupsInfo[cup[i][cupIdx]]['probability'] += (i - 1) * 2
+		cupsInfo[cup_order[i]['cupIdx']]['probability'] += (i - 1) * 2
 
 def update_cup_distance(cupsInfo):
 	for cup in cupsInfo:
@@ -40,12 +40,14 @@ def update_cup_distance(cupsInfo):
 		cup['disToEE'] = math.sqrt(xDistance ** 2 + yDistance ** 2 + zDistance ** 2)
 
 def check_threshold(cupsInfo):
+	global finalGoalCupIdx
 	meetDisThreshold = False
 	meetProbThreshold = False
 	maxProbCup = cupsInfo.sorted(key=get_cup_prob)
-	println("Cup with grtest probability: cup# " + maxProbCup['idx'])
-	minDisCup = cupsInfo.sorted(key=get_cup_prob, reverse=True)
+	println("Cup with grtest probability: cup" + maxProbCup['idx'])
+	minDisCup = cupsInfo.sorted(key=get_cup_dis, reverse=True)
 	if (maxProbCup == maxProbCup):
+		finalGoalCupIdx = maxProbCup['idx']
 		return maxProbCup['disToEE'] <= disToEEthreshold
 	return False
 
@@ -71,9 +73,9 @@ def get_cup_prob(cup):
 
 def main():
 	global cupsInfo
-	global displacement
-	global finalGoalPos
 	global currGripperPos
+	global finalGoalCupIdx
+	global finalGoalPos
 
 	userLinearInput = [0, 0, 0]
 	metThreshold = False
@@ -84,6 +86,7 @@ def main():
 		if not metThreshold: # haven't reach threshold position
 			needUpdate = False
 			needAngleUpdate = False
+			displacement = [0, 0, 0]
 			if (abs(userLinearInput[0]) > noise): # map user joystick inpu to a certain value to move the arm
 				displacement[0] = map_input_to_displacement(userLinearInput[0])
 				needUpdate = True
@@ -99,7 +102,7 @@ def main():
 				if (needAngleUpdate):
 					userInputAngle = math.atan(userLinearInput[1] / userLinearInput[0])
 					update_cups_angle(cupsInfo, userInputAngle) # update the angle between each cup and the EE
-				update_probability(cupsInfo) # update probability according to angle
+					update_probability(cupsInfo) # update probability according to angle
 
 				# TBA:
 				# move arm according to displacement
@@ -109,6 +112,6 @@ def main():
 				metThreshold = check_threshold(cupsInfo) # decide if threshold is meet and should pick up cup
 		else:
 			# TBA:
-			# go to position finalGoalPos, and pick up cup
+			# pick up cup with idx finalGoalCupIdx
 
 			finishedTask = True
