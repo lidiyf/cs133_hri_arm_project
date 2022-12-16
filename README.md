@@ -32,10 +32,7 @@ The Kinova arm web app is available at: `192.168.1.10/monitoring`
  
  ## Shared Autonomy
  ### Goal
- Given a set of objects arranged in a grid (as shown below), we have a user control the robotic arm using an xbox controller. We implement shared autonomy to predict which object they have selected.
-| A | B |
-| --- | --- |
-| C | D |
+ Given a set of objects arranged in a semicircle, we have a user control the robotic arm using an xbox controller. We implement shared autonomy to predict which object they have selected.
  
  ### Controller Input
  An xbox controller is connected to the computer. We read user input by using the [Joy](http://library.isr.ist.utl.pt/docs/roswiki/joy(2f)Tutorials(2f)ConfiguringALinuxJoystick.html) library. 
